@@ -64,7 +64,7 @@ impl PkgDepTrace for DebPackageTrace {
         d
     }
 
-    fn exclude(&mut self, pkgs: Vec<String>) -> &mut Self {
+    fn exclude(&mut self, pkgs: Vec<String>) -> &mut dyn PkgDepTrace {
         self.exclude.extend(pkgs);
         self
     }

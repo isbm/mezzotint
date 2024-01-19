@@ -60,6 +60,14 @@ pub fn cli(version: &'static str) -> Command {
                 .help(format!("Auto-add package dependencies.\n{}", " NOTE: This can increase the size, but might not always be useful\n".yellow()))
         )
         .arg(
+            Arg::new("delta-only")
+                .short('l')
+                .long("delta-only")
+                .action(clap::ArgAction::SetTrue)
+                .help(format!("Remove all identical files, those are found on the current host system.\n{}",
+                " NOTE: Installation of such app bundle container might be erroneous\n on other systems! Make sure this container is installed on \n the same distribution and its version!".yellow()))
+        )
+        .arg(
             Arg::new("root")
                 .short('r')
                 .long("root")

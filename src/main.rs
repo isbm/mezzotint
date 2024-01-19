@@ -7,7 +7,7 @@ mod rootfs;
 mod scanner;
 mod shcall;
 use crate::profile::Profile;
-use clap::{ArgMatches, Command};
+use clap::{error::ErrorKind, ArgMatches, Command};
 use colored::Colorize;
 use std::{
     env,
@@ -115,6 +115,14 @@ fn main() -> Result<(), std::io::Error> {
     // Since --help is disabled on purpose in CLI definition, it is checked manually.
     if *params.get_one::<bool>("help").unwrap() {
         cli.print_help().unwrap();
+        return Ok(());
+    }
+
+    if *params.get_one::<bool>("delta-only").unwrap() {
+        if sys_info::os_type().unwrap_or_default().to_lowercase() != "linux" {
+            return Err(std::io::Error::new(std::io::ErrorKind::Unsupported, "Unsupported OS. Only Linux for now..."));
+        }
+
         return Ok(());
     }
 
